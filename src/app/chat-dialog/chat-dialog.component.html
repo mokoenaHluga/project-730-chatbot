@@ -1,0 +1,29 @@
+<div *ngIf="isChatVisible" class="card">
+  <div class="head">
+    Chat with us
+    <div class="button-container">
+      <button (click)="toggleChat()" class="right-aligned" mat-icon-button>
+        <mat-icon>minimize</mat-icon>
+      </button>
+    </div>
+
+  </div>
+  <div #chatListContainer class="chat-list">
+    <ng-container *ngFor="let message of chatMessages">
+      <div [ngClass]="{'right' : message?.user?.id == human.id, 'left': message?.user?.id != human.id}"
+           class="chat-item">
+        <img [src]="message?.user?.imageDir" id="avatar">
+        <p id="message-body">{{message?.message}}</p>
+      </div>
+    </ng-container>
+  </div>
+  <div class="chat-footer">
+    <input (keydown.enter)="sendMessage()" [(ngModel)]="chatInputMessage" id="chat-textarea" matInput required>
+    <button (click)="sendMessage()" [disabled]="chatInputMessage === ''" id="send-button">
+      SEND
+    </button>
+  </div>
+</div>
+
+<button (click)="toggleChat()" *ngIf="!isChatVisible" class="support-button">Support</button>
+

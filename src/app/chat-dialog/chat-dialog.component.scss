@@ -1,0 +1,145 @@
+$background: white;
+$primary: #63c522;
+
+.card {
+  background: $background;
+  height: 55%;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0px 0px 5px black);
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+.chat-list {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  overflow-y: scroll;
+
+
+  .chat-item {
+    max-width: 80%;
+    margin: 8px 0px;
+    display: flex;
+    flex-direction: row;
+
+    #message-body {
+      background: $primary;
+      margin: auto 8px;
+      padding: 12px 24px;
+      border-radius: 30px;
+      color: $background;
+      display: flex;
+      flex-direction: row;
+    }
+
+    #avatar {
+      height: 44px;
+      width: 44px;
+      object-fit: cover;
+      border-radius: 50%;
+      z-index: 99;
+    }
+  }
+
+  .left {
+    margin-right: auto;
+    margin-left: 8px;
+
+    #message-body {
+      margin-left: -10px;
+    }
+  }
+
+  .right {
+    margin-right: 8px;
+    margin-left: auto;
+    flex-direction: row-reverse;
+
+    #message-body {
+      margin-right: -10px;
+    }
+  }
+}
+
+.chat-footer {
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+  border-radius: 1px;
+
+  #chat-textarea {
+    flex: 1;
+    margin: 0 8px;
+    border: 0px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+    padding: 16px;
+  }
+
+  #send-button {
+    border: 0;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+    background: $background;
+    padding: 0 8px;
+  }
+
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.head {
+  background: #3C3C3C;
+  padding: 8px 8px;
+  text-align: center;
+  letter-spacing: 0.0214286rem;
+  line-height: 1.5;
+  font-size: 1.07143rem;
+  margin-bottom: 2px;
+  color: $background;
+  display: flex;
+}
+
+.support-button {
+  border-radius: 999rem;
+  flex-direction: column;
+  filter: drop-shadow(0px 0px 5px black);
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: #3C3C3C;
+  border: none;
+  color: $background;
+  padding: .92857rem 1.57143rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #3C3C3C
+
+}
+
+.mat-icon-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  cursor: pointer;
+  outline: none;
+  color: $background;
+}
+
+
