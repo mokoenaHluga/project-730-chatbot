@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from "../service/chat.service";
+import {SessionChatRequest} from "../model/SessionChatRequest";
 
 @Component({
   selector: 'app-chat-dialog',
@@ -8,6 +9,8 @@ import {ChatService} from "../service/chat.service";
 })
 export class ChatDialogComponent implements OnInit {
   public isChatVisible: boolean = true;
+  request: SessionChatRequest = new SessionChatRequest();
+
   @ViewChild('chatListContainer') list?: ElementRef<HTMLDivElement>;
   chatInputMessage: string = "";
   human = {
@@ -31,18 +34,12 @@ export class ChatDialogComponent implements OnInit {
     },
   ];
 
-  constructor(private chatService: ChatService) {
+  constructor(public chatService: ChatService) {
   }
 
   ngOnInit() {
     if (localStorage.getItem('fakeUserId') === null) {
       localStorage.setItem('fakeUserId', this.generateFakeId())
-    } else {
-      this.chatService.findAll().subscribe(data => {
-        if (data !== null) {
-          this.setConversation(data['conversation'])
-        }
-      });
     }
   }
 
@@ -63,27 +60,18 @@ export class ChatDialogComponent implements OnInit {
   }
 
   receiveMessage(message: string) {
+    if (message.includes('Your chatting to Stacey, How may i help you')) {
+      this.request.sessionId = this.generateFakeId();
+      this.request.agentName = 'Stacey';
+      this.request.agentId = 1;
+
+      this.chatService.startSessionWithAgent(this.request).unsubscribe()
+    }
     this.chatMessages.push({
       message: message,
       user: this.bot
     });
     this.scrollToBottom()
-  }
-
-  setConversation(conversation: any) {
-    for (let i = 0; i < conversation.length; i++) {
-      if (i % 2 === 0) {
-        this.chatMessages.push({
-          message: conversation[i],
-          user: this.human
-        });
-      } else {
-        this.chatMessages.push({
-          message: conversation[i],
-          user: this.bot
-        });
-      }
-    }
   }
 
   scrollToBottom() {
