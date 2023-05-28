@@ -1,4 +1,4 @@
-<div *ngIf="isChatVisible" class="card">
+<div *ngIf="!isChatVisible" class="card">
   <div class="head">
     Chat with us
     <div class="button-container">
@@ -18,12 +18,12 @@
     </ng-container>
   </div>
   <div class="chat-footer">
-    <input (keydown.enter)="sendMessage()" [(ngModel)]="chatInputMessage" id="chat-textarea" matInput required>
+    <input (keydown.enter)="sendMessage()" [(ngModel)]="chatInputMessage" id="chat-textarea" matInput autocomplete="off" required>
     <button (click)="sendMessage()" [disabled]="chatInputMessage === ''" id="send-button">
       SEND
     </button>
   </div>
 </div>
 
-<button (click)="toggleChat()" *ngIf="!isChatVisible" class="support-button">Support</button>
+<button (click)="toggleChat()" *ngIf="isChatVisible" class="support-button">Support</button>
 
