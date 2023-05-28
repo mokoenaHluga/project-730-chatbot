@@ -62,7 +62,6 @@ export class ChatDialogComponent implements OnInit {
   receiveMessage(message: string) {
     if (message.includes('Your chatting to Stacey, How may i help you')) {
       this.request.sessionId = this.generateFakeId();
-      this.request.agentName = 'Stacey';
       this.request.agentId = 1;
 
       this.chatService.startSessionWithAgent(this.request).unsubscribe()

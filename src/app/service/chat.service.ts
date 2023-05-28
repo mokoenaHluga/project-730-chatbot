@@ -11,19 +11,16 @@ export class ChatService {
   private readonly url: string;
 
   constructor(private http: HttpClient) {
-    this.url = `http://localhost:8080/api/${localStorage.getItem('fakeUserId')}`;
+    this.url = `http://localhost:8080/api/`;
   }
 
   public send(message: string): Observable<string> {
-    return this.http.put<string>(this.url, message);
+    return this.http.put<string>(this.url+localStorage.getItem('fakeUserId'), message);
   }
 
-  // public findAll() {
-  //   return this.http.get<any>(this.url);
-  // }
-
   public startSessionWithAgent(request: SessionChatRequest) {
-    return this.http.post<string>(this.url, request).subscribe(data => {
+
+    return this.http.post<string>(this.url+"start-session", request).subscribe(data => {
     });
   }
 }
