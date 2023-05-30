@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {SessionChatRequest} from "../model/SessionChatRequest";
+import {SessionChatResponse} from "../model/SessionChatResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,10 @@ export class ChatService {
   }
 
   public send(message: string): Observable<string> {
-    return this.http.put<string>(this.url+localStorage.getItem('fakeUserId'), message);
+    return this.http.put<string>(this.url + localStorage.getItem('fakeUserId'), message);
   }
 
-  public startSessionWithAgent(request: SessionChatRequest) {
-
-    return this.http.post<string>(this.url+"start-session", request).subscribe(data => {
-    });
+  public startSessionWithAgent(request: SessionChatRequest): Observable<SessionChatResponse> {
+    return this.http.post<SessionChatResponse>(this.url + "start-session", request);
   }
 }

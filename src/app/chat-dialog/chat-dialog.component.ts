@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from "../service/chat.service";
 import {SessionChatRequest} from "../model/SessionChatRequest";
+import {SessionChatResponse} from "../model/SessionChatResponse";
 
 @Component({
   selector: 'app-chat-dialog',
@@ -10,6 +11,7 @@ import {SessionChatRequest} from "../model/SessionChatRequest";
 export class ChatDialogComponent implements OnInit {
   public isChatVisible: boolean = true;
   request: SessionChatRequest = new SessionChatRequest();
+  public response: SessionChatResponse = new SessionChatResponse();
 
   @ViewChild('chatListContainer') list?: ElementRef<HTMLDivElement>;
   chatInputMessage: string = "";
@@ -60,16 +62,30 @@ export class ChatDialogComponent implements OnInit {
   }
 
   receiveMessage(message: string) {
+    let newName: string | undefined = "";
+
     if (message.includes('Your chatting to Stacey, How may i help you')) {
       this.request.sessionId = this.generateFakeId();
-      this.request.agentId = 1;
+      this.request.agentId = this.getRandomAvailableAgent(1, 4);
 
-      this.chatService.startSessionWithAgent(this.request).unsubscribe()
+      this.chatService.startSessionWithAgent(this.request).subscribe(data => {
+        console.log("Response return: " + data.name)
+        this.response = data
+        newName = data.name;
+
+        this.chatMessages.push({
+          message: this.getMessage(message, newName),
+          user: this.bot
+        });
+
+      });
+    } else {
+      this.chatMessages.push({
+        message: this.getMessage(message, newName),
+        user: this.bot
+      });
     }
-    this.chatMessages.push({
-      message: message,
-      user: this.bot
-    });
+
     this.scrollToBottom()
   }
 
@@ -86,5 +102,15 @@ export class ChatDialogComponent implements OnInit {
 
   toggleChat() {
     this.isChatVisible = !this.isChatVisible;
+  }
+
+  getRandomAvailableAgent(min: number, max: number) {
+    return Math.floor(min + Math.random()*(max - min + 1))
+  }
+
+  getMessage(message: string, name: string | undefined) {
+    console.log("new name" + name)
+    console.log("Message" + message)
+    return message.includes("Stacey") ? message.replace("Stacey", <string>name) : message;
   }
 }
