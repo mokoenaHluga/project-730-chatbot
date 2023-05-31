@@ -9,9 +9,10 @@ import {SessionChatResponse} from "../model/SessionChatResponse";
   styleUrls: ['./chat-dialog.component.scss']
 })
 export class ChatDialogComponent implements OnInit {
-  public isChatVisible: boolean = true;
+  isChatVisible: boolean = true;
   request: SessionChatRequest = new SessionChatRequest();
-  public response: SessionChatResponse = new SessionChatResponse();
+  response: SessionChatResponse = new SessionChatResponse();
+  showName: boolean = false;
 
   @ViewChild('chatListContainer') list?: ElementRef<HTMLDivElement>;
   chatInputMessage: string = "";
@@ -77,9 +78,11 @@ export class ChatDialogComponent implements OnInit {
           message: this.getMessage(message, newName),
           user: this.bot
         });
+        this.showName = true;
 
       });
     } else {
+      this.showName = false;
       this.chatMessages.push({
         message: this.getMessage(message, newName),
         user: this.bot

@@ -1,6 +1,11 @@
 <div *ngIf="!isChatVisible" class="card">
   <div class="head">
-    Chat with us + {{response?.name}}
+    <ng-container *ngIf="showName">
+        Chatting with {{ response.name }}
+    </ng-container>
+    <ng-container *ngIf="!showName">
+        Chat with us
+    </ng-container>
     <div class="button-container">
       <button (click)="toggleChat()" class="right-aligned" mat-icon-button>
         <mat-icon>minimize</mat-icon>
