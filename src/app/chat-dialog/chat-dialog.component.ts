@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from "../service/chat.service";
 import {SessionChatRequest} from "../model/SessionChatRequest";
-import {SessionChatResponse} from "../model/SessionChatResponse";
 
 @Component({
   selector: 'app-chat-dialog',
@@ -11,8 +10,8 @@ import {SessionChatResponse} from "../model/SessionChatResponse";
 export class ChatDialogComponent implements OnInit {
   isChatVisible: boolean = true;
   request: SessionChatRequest = new SessionChatRequest();
-  response: SessionChatResponse = new SessionChatResponse();
   showName: boolean = false;
+  newName: string | undefined = "";
 
   @ViewChild('chatListContainer') list?: ElementRef<HTMLDivElement>;
   chatInputMessage: string = "";
@@ -63,19 +62,16 @@ export class ChatDialogComponent implements OnInit {
   }
 
   receiveMessage(message: string) {
-    let newName: string | undefined = "";
 
     if (message.includes('Your chatting to Stacey, How may i help you')) {
       this.request.sessionId = this.generateFakeId();
       this.request.agentId = this.getRandomAvailableAgent(1, 4);
 
       this.chatService.startSessionWithAgent(this.request).subscribe(data => {
-        console.log("Response return: " + data.name)
-        this.response = data
-        newName = data.name;
+        this.newName = data.agent.name;
 
         this.chatMessages.push({
-          message: this.getMessage(message, newName),
+          message: this.getMessage(message, this.newName),
           user: this.bot
         });
         this.showName = true;
@@ -84,7 +80,7 @@ export class ChatDialogComponent implements OnInit {
     } else {
       this.showName = false;
       this.chatMessages.push({
-        message: this.getMessage(message, newName),
+        message: this.getMessage(message, this.newName),
         user: this.bot
       });
     }
@@ -112,8 +108,6 @@ export class ChatDialogComponent implements OnInit {
   }
 
   getMessage(message: string, name: string | undefined) {
-    console.log("new name" + name)
-    console.log("Message" + message)
     return message.includes("Stacey") ? message.replace("Stacey", <string>name) : message;
   }
 }
