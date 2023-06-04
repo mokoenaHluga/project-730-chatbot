@@ -7,7 +7,8 @@ The Chatbot Application is a web-based chatbot system that utilizes natural lang
 ### Directories for all 3 services 
 >`*` Frontend (Angular) - https://github.com/mokoenaHluga/project-730-chatbot \
 > `*` Mediator(Java -s Spring-boot)  https://github.com/mokoenaHluga/Gumtree-Chatbot/blob/master/README.md -\
-> `*` NLP Service (Python) -	https://github.com/mokoenaHluga/Gumtree-chatbot-answer-generator/README.md
+> `*` NLP Service (Python) -	https://github.com/mokoenaHluga/Gumtree-chatbot-answer-generator/blob/master/README.md
+
 ## Technologies Used
 
 `*` Angular 12.0.0\
